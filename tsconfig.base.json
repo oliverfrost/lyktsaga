@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "importHelpers": true,
+    "isolatedModules": true,
+    "lib": ["es2022", "dom"],
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitOverride": true,
+    "noImplicitReturns": true,
+    "noUnusedLocals": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "target": "es2022",
+    "noUncheckedSideEffectImports": false,
+    "types": ["*"],
+    "paths": {
+      "@lyktsaga/shared-types": ["./packages/shared-types/src/index.ts"],
+      "@lyktsaga/data": ["./packages/data/src/index.ts"],
+      "@lyktsaga/auth": ["./packages/auth/src/index.ts"],
+      "@lyktsaga/payments": ["./packages/payments/src/index.ts"],
+      "@lyktsaga/ui": ["./packages/ui/src/index.ts"]
+    }
+  }
+}
