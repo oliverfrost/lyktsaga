@@ -1,0 +1,15 @@
+services:
+  postgres:
+    image: postgres:17-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: lyktsaga
+      POSTGRES_PASSWORD: lyktsaga
+      POSTGRES_DB: lyktsaga_dev
+    ports:
+      - '5432:5432'
+    volumes:
+      - lyktsaga-postgres-data:/var/lib/postgresql/data
+
+volumes:
+  lyktsaga-postgres-data:

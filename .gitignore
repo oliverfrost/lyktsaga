@@ -53,3 +53,6 @@ Thumbs.db
 __screenshots__/
 
 vitest.config.*.timestamp*
+
+.env
+!.env.example

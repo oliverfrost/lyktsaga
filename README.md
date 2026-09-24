@@ -29,14 +29,21 @@ and [`docs/adr/0001-initial-platform-stack.md`](docs/adr/0001-initial-platform-s
 
 ## Getting started
 
-Requires the Node version pinned in `.nvmrc` and `pnpm` (enable via
-`corepack enable`).
+Requires the Node version pinned in `.nvmrc`, `pnpm` (enable via
+`corepack enable`), and Docker (for the local Postgres database).
 
 ```bash
 pnpm install
+cp .env.example .env        # only needed once
+
+# start local Postgres
+docker compose up -d
+
+# apply the Prisma schema (first run only, or after schema changes)
+pnpm exec prisma migrate dev
 
 # serve an individual app
-pnpm exec nx serve store-api    # http://localhost:3000/api/v1
+pnpm exec nx serve store-api    # http://localhost:3000/api/v1 (docs at /api/v1/docs)
 pnpm exec nx serve admin-api    # http://localhost:3001/api/v1
 pnpm exec nx serve store-web    # http://localhost:4200
 pnpm exec nx serve admin-web    # http://localhost:4201

@@ -9,3 +9,7 @@ allowBuilds:
   nx: true
   unrs-resolver: true
   '@nestjs/core': false
+  workerd: true
+  '@prisma/engines': true
+  prisma: true
+  '@scarf/scarf': true
