@@ -1,0 +1,10 @@
+<article class="flex flex-col gap-2">
+  <img
+    [src]="coverImageUrl()"
+    [alt]="book().title"
+    class="aspect-[2/3] w-full rounded object-cover"
+  />
+  <h3 class="font-semibold leading-tight">{{ book().title }}</h3>
+  <p class="text-sm text-gray-600">{{ book().author }}</p>
+  <p class="font-medium">{{ formattedPrice() }}</p>
+</article>

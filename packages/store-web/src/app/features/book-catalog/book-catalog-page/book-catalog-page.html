@@ -1,0 +1,13 @@
+@if (booksResource.isLoading()) {
+<p>Loading books…</p>
+} @else if (booksResource.error()) {
+<p>Failed to load books.</p>
+} @else if (booksResource.value().length === 0) {
+<p>No books available yet.</p>
+} @else {
+<div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6 p-6">
+  @for (book of booksResource.value(); track book.id) {
+  <store-book-card [book]="book" />
+  }
+</div>
+}

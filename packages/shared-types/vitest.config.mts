@@ -12,6 +12,9 @@ export default defineConfig(() => ({
     globals: true,
     environment: 'node',
     include: ['{src,tests}/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
+    // This lib currently only holds type declarations (no behavior to
+    // test) - don't fail the build for having zero test files.
+    passWithNoTests: true,
     reporters: ['default'],
     coverage: {
       reportsDirectory: '../../coverage/packages/shared-types',

@@ -21,7 +21,10 @@
             "input": "packages/store-web/public"
           }
         ],
-        "styles": ["packages/store-web/src/styles.scss"],
+        "styles": [
+          "packages/store-web/src/tailwind.css",
+          "packages/store-web/src/styles.scss"
+        ],
         "server": "packages/store-web/src/main.server.ts",
         "ssr": {
           "entry": "packages/store-web/src/server.ts"
@@ -42,7 +45,13 @@
               "maximumError": "8kb"
             }
           ],
-          "outputHashing": "all"
+          "outputHashing": "all",
+          "fileReplacements": [
+            {
+              "replace": "packages/store-web/src/environments/environment.ts",
+              "with": "packages/store-web/src/environments/environment.prod.ts"
+            }
+          ]
         },
         "development": {
           "optimization": false,

@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 360" role="img" aria-label="No cover available">
+  <rect width="240" height="360" fill="#e5e7eb"/>
+  <rect x="24" y="24" width="192" height="312" fill="none" stroke="#9ca3af" stroke-width="2"/>
+  <path d="M70 60h100M70 84h100M70 108h60" stroke="#9ca3af" stroke-width="4" stroke-linecap="round"/>
+  <path d="M60 160h120v140H60z" fill="none" stroke="#9ca3af" stroke-width="3"/>
+  <path d="M60 160l60 40 60-40" fill="none" stroke="#9ca3af" stroke-width="3"/>
+</svg>
