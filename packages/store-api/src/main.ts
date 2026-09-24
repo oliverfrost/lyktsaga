@@ -36,4 +36,7 @@ async function bootstrap() {
   );
 }
 
-bootstrap();
+bootstrap().catch((error: unknown) => {
+  Logger.error('Failed to start application', error);
+  process.exit(1);
+});

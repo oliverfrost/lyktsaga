@@ -13,6 +13,23 @@ permissions:
 jobs:
   main:
     runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:17-alpine
+        env:
+          POSTGRES_USER: lyktsaga
+          POSTGRES_PASSWORD: lyktsaga
+          POSTGRES_DB: lyktsaga_dev
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd="pg_isready -U lyktsaga"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+    env:
+      DATABASE_URL: postgresql://lyktsaga:lyktsaga@localhost:5432/lyktsaga_dev?schema=public
+      SHADOW_DATABASE_URL: postgresql://lyktsaga:lyktsaga@localhost:5432/lyktsaga_shadow?schema=public
     steps:
       - uses: actions/checkout@v5
         with:
@@ -27,6 +44,20 @@ jobs:
           cache: 'pnpm'
 
       - run: pnpm install --frozen-lockfile
+
+      # `prisma migrate diff` needs this to exist; Prisma only manages its
+      # schema, not its creation.
+      - name: Create Prisma shadow database
+        run: PGPASSWORD=lyktsaga psql -h localhost -U lyktsaga -d lyktsaga_dev -c 'CREATE DATABASE lyktsaga_shadow;'
+
+      # Fails the build if schema.prisma was edited without a matching
+      # migration file - catches drift before it reaches production.
+      - name: Check Prisma schema matches migrations
+        run: |
+          pnpm exec prisma migrate diff \
+            --from-migrations packages/data/prisma/migrations \
+            --to-schema packages/data/prisma/schema.prisma \
+            --exit-code
 
       # Only lint/test/build what's affected by this change vs main.
       - run: pnpm exec nx format:check --base=remotes/origin/main

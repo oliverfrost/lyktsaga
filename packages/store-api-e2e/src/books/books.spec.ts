@@ -1,5 +1,12 @@
 import axios from 'axios';
 
+// The API serializes Prisma's Decimal `price` field as a string over JSON,
+// so this intentionally doesn't reuse Prisma's generated `Book` type.
+interface BookResponse {
+  id: string;
+  price: string;
+}
+
 describe('Books', () => {
   const createPayload = {
     title: 'Dune',
@@ -10,7 +17,7 @@ describe('Books', () => {
   };
 
   it('creates a book', async () => {
-    const res = await axios.post('/api/v1/books', createPayload);
+    const res = await axios.post<BookResponse>('/api/v1/books', createPayload);
 
     expect(res.status).toBe(201);
     expect(res.data).toMatchObject({ ...createPayload, price: '9.99' });
@@ -24,20 +31,26 @@ describe('Books', () => {
   });
 
   it('lists books including a newly created one', async () => {
-    const created = await axios.post('/api/v1/books', createPayload);
+    const created = await axios.post<BookResponse>(
+      '/api/v1/books',
+      createPayload,
+    );
 
-    const res = await axios.get('/api/v1/books');
+    const res = await axios.get<BookResponse[]>('/api/v1/books');
 
     expect(res.status).toBe(200);
-    expect(res.data.map((b: { id: string }) => b.id)).toContain(
-      created.data.id,
-    );
+    expect(res.data.map((b) => b.id)).toContain(created.data.id);
   });
 
   it('gets a single book by id', async () => {
-    const created = await axios.post('/api/v1/books', createPayload);
+    const created = await axios.post<BookResponse>(
+      '/api/v1/books',
+      createPayload,
+    );
 
-    const res = await axios.get(`/api/v1/books/${created.data.id}`);
+    const res = await axios.get<BookResponse>(
+      `/api/v1/books/${created.data.id}`,
+    );
 
     expect(res.status).toBe(200);
     expect(res.data.id).toBe(created.data.id);
@@ -50,18 +63,25 @@ describe('Books', () => {
   });
 
   it('updates a book', async () => {
-    const created = await axios.post('/api/v1/books', createPayload);
+    const created = await axios.post<BookResponse>(
+      '/api/v1/books',
+      createPayload,
+    );
 
-    const res = await axios.patch(`/api/v1/books/${created.data.id}`, {
-      price: 12.5,
-    });
+    const res = await axios.patch<BookResponse>(
+      `/api/v1/books/${created.data.id}`,
+      { price: 12.5 },
+    );
 
     expect(res.status).toBe(200);
     expect(res.data.price).toBe('12.5');
   });
 
   it('deletes a book', async () => {
-    const created = await axios.post('/api/v1/books', createPayload);
+    const created = await axios.post<BookResponse>(
+      '/api/v1/books',
+      createPayload,
+    );
 
     const del = await axios.delete(`/api/v1/books/${created.data.id}`);
     expect(del.status).toBe(204);

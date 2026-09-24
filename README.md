@@ -51,6 +51,13 @@ pnpm exec nx serve admin-web    # http://localhost:4201
 # run tests / lint for everything affected by your change
 pnpm exec nx affected -t lint test build
 
+# optional: replicate CI's "schema matches migrations" check locally
+# (one-time setup: docker compose exec postgres psql -U lyktsaga -d lyktsaga_dev -c 'CREATE DATABASE lyktsaga_shadow;')
+pnpm exec prisma migrate diff \
+  --from-migrations packages/data/prisma/migrations \
+  --to-schema packages/data/prisma/schema.prisma \
+  --exit-code
+
 # run tests / lint for the whole workspace
 pnpm exec nx run-many -t lint test build
 ```

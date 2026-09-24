@@ -11,7 +11,8 @@
     "lint": "nx run-many -t lint",
     "test": "nx run-many -t test",
     "build": "nx run-many -t build",
-    "affected": "nx affected -t lint test build"
+    "typecheck": "nx run-many -t typecheck",
+    "affected": "nx affected -t lint test build typecheck"
   },
   "private": true,
   "devDependencies": {

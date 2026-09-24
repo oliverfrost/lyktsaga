@@ -66,6 +66,9 @@
     }
   ],
   "analytics": false,
+  "sync": {
+    "disabledTaskSyncGenerators": ["@nx/js:typescript-sync"]
+  },
   "targetDefaults": {
     "@angular/build:application": {
       "cache": true,
